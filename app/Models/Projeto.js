@@ -5,7 +5,7 @@ const Model = use("Model");
 
 class Projeto extends Model {
   autores() {
-    return this.hasMany("App/Models/Autor");
+    return this.belongsToMany("App/Models/Autor").pivotTable("autorias");
   }
   premios() {
     return this.belongsToMany("App/Models/Premio").pivotTable("concorrentes");

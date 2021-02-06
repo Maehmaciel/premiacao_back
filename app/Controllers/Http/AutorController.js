@@ -16,14 +16,17 @@ class AutorController {
   }
 
   async store({ request, response }) {
-    const autorData = request.only(["user", "profissao", "projeto_id"]);
+    const autorData = request.only(["user", "profissao", "projetos"]);
     const user = await User.create(autorData.user);
     const { id, ...userData } = user.toJSON();
     const autor = await Autor.create({
       profissao: autorData.profissao,
-      projeto_id: autorData.projeto_id,
       user_id: id,
     });
+    if (autorData.projetos && autorData.projetos.length > 0) {
+      await autor.projetos().attach(autorData.projetos);
+      await autor.load("projetos");
+    }
     return autor;
   }
 

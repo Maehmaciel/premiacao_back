@@ -7,8 +7,8 @@ class Autor extends Model {
   static get table() {
     return "autores";
   }
-  projeto() {
-    return this.belongsTo("App/Models/Projeto");
+  projetos() {
+    return this.belongsToMany("App/Models/Projeto").pivotTable("autorias");
   }
   user() {
     return this.belongsTo("App/Models/User");

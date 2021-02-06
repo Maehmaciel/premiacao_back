@@ -16,14 +16,6 @@ class AutorSchema extends Schema {
         .inTable("users")
         .onUpdate("CASCADE")
         .onDelete("CASCADE");
-      table
-        .integer("projeto_id")
-        .unsigned()
-        .notNullable()
-        .references("id")
-        .inTable("projetos")
-        .onUpdate("CASCADE")
-        .onDelete("CASCADE");
       table.timestamps();
     });
   }

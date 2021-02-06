@@ -31,8 +31,9 @@ class ProjetoController {
   }
 
   async store({ request, response }) {
-    const { premios, ...projetoData } = request.only([
+    const { premios, autores, ...projetoData } = request.only([
       "premios",
+      "autores",
       "titulo",
       "resumo",
       "areaAtuacao",
@@ -42,6 +43,10 @@ class ProjetoController {
     if (premios && premios.length > 0) {
       await projeto.premios().attach(premios);
       await projeto.load("premios");
+    }
+    if (autores && autores.length > 0) {
+      await projeto.autores().attach(autores);
+      await projeto.load("autores");
     }
     return projeto;
   }

@@ -19,7 +19,6 @@ class PremioController {
         .has("vencedor")
         .fetch();
     } else {
-      console.log(" Banana");
       premio = await Premio.all();
     }
 
