@@ -4,9 +4,24 @@ const Autor = use("App/Models/Autor");
 const User = use("App/Models/User");
 
 class AutorController {
-  async index({ request, response, view }) {
+  async index({ request, response, view, auth }) {
     const autor = await Autor.query()
       .with("user")
+      .where("user_id", auth.user.id)
+      .with("projetos")
+      .with("user.telefones")
+      .with("user.enderecos")
+      .fetch();
+
+    return autor;
+  }
+  async lista({ request, response, view }) {
+    //este metodo lista autores que nao estao ligados a um projeto informado
+    const autor = await Autor.query()
+      .with("user")
+      .whereDoesntHave("projetos", (builder) => {
+        builder.where("projeto_id", request.all().projeto);
+      })
       .with("projetos")
       .with("user.telefones")
       .with("user.enderecos")

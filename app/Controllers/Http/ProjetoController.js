@@ -64,7 +64,7 @@ class ProjetoController {
   async update({ params, request, response }) {
     try {
       const projeto = await Projeto.findOrFail(params.id);
-      const projetoData = request.only(["projeto"]);
+      const projetoData = request.only(["premios", "autores"]);
       projeto.merge(projetoData);
       await projeto.save();
 
