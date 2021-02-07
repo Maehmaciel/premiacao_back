@@ -1,17 +1,16 @@
 "use strict";
 const Avaliacao = use("App/Models/Avaliacao");
-
+const Avaliador = use("App/Models/Avaliador");
 class AvaliacaoController {
   async index({ request, response, view }) {}
 
-  async store({ params, request, response, view }) {
-    const avaliacaoData = request.only([
-      "parecer",
-      "nota",
-      "data",
-      "avaliador_id",
-    ]);
+  async store({ params, request, response, view, auth }) {
+    const avaliacaoData = request.only(["parecer", "nota"]);
+    const avaliador = await Avaliador.query()
+      .where("user_id", auth.user.id)
+      .fetch();
 
+    avaliacaoData.avaliador_id = avaliador.id;
     avaliacaoData.projeto_id = parseInt(params.projeto_id);
     const avaliacao = await Avaliacao.create(avaliacaoData);
 
