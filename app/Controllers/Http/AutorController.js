@@ -7,7 +7,7 @@ class AutorController {
   async index({ request, response, view }) {
     const autor = await Autor.query()
       .with("user")
-      .with("projeto")
+      .with("projetos")
       .with("user.telefones")
       .with("user.enderecos")
       .fetch();
