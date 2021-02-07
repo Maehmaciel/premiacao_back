@@ -9,7 +9,6 @@ class AvaliacaoSchema extends Schema {
       table.increments();
       table.string("parecer").notNullable();
       table.double("nota").notNullable();
-      table.date("data").notNullable();
       table
         .integer("avaliador_id")
         .unsigned()

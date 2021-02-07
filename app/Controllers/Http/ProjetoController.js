@@ -9,7 +9,7 @@ class ProjetoController {
     if (request.all().avaliado == "true") {
       projeto = await Projeto.query()
         .with("autores.user")
-        .with("avaliacoes.avaliador")
+        .with("avaliacoes.avaliador.user")
         .with("premios")
         .has("avaliacoes")
         .fetch();
@@ -23,7 +23,7 @@ class ProjetoController {
       projeto = await Projeto.query()
         .with("autores.user")
         .with("premios")
-        .with("avaliacoes.avaliador")
+        .with("avaliacoes.avaliador.user")
         .fetch();
     }
 

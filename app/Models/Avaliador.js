@@ -8,7 +8,7 @@ class Avaliador extends Model {
     return "avaliadores";
   }
   user() {
-    return this.hasOne("App/Models/User");
+    return this.belongsTo("App/Models/User");
   }
 }
 
