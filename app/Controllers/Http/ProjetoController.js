@@ -64,12 +64,20 @@ class ProjetoController {
   async update({ params, request, response }) {
     try {
       const projeto = await Projeto.findOrFail(params.id);
-      const projetoData = request.only(["premios", "autores"]);
-      projeto.merge(projetoData);
-      await projeto.save();
+      const { premios, autores } = request.only(["premios", "autores"]);
+
+      if (premios && premios.length > 0) {
+        await projeto.premios().sync(premios);
+        await projeto.load("premios");
+      }
+      if (autores && autores.length > 0) {
+        await projeto.autores().sync(autores);
+        await projeto.load("autores");
+      }
 
       return projeto;
     } catch (error) {
+      console.log(error);
       return response
         .status(error.status)
         .send({ erro: "nao foi possivel atualizar" });
