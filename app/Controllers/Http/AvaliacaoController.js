@@ -9,8 +9,8 @@ class AvaliacaoController {
     const avaliador = await Avaliador.query()
       .where("user_id", auth.user.id)
       .fetch();
-
-    avaliacaoData.avaliador_id = avaliador.id;
+    const avaliadorJSON = avaliador.toJSON();
+    avaliacaoData.avaliador_id = avaliadorJSON[0].id;
     avaliacaoData.projeto_id = parseInt(params.projeto_id);
     const avaliacao = await Avaliacao.create(avaliacaoData);
 
