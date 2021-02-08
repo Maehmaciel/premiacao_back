@@ -6,6 +6,8 @@ class UserController {
       const { email, password } = request.all();
       const webToken = await auth.attempt(email, password);
 
+      const user = await User.findByOrFail("email", email);
+      webToken.isAvaliador = user.isAvaliador;
       return webToken;
     } catch (error) {
       return response
